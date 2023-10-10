@@ -17,7 +17,7 @@ import hu.agnos.cube.specification.exception.NameOfMeasureSpecificationNotUnique
 import hu.agnos.cube.specification.validator.HierarchyNameValidator;
 import hu.agnos.cube.specification.validator.LevelOrderValidator;
 import hu.agnos.cube.specification.validator.MeasureNameValidator;
-import hu.agnos.cube.specification.validator.PartitionedFlagValidator;
+import hu.agnos.cube.specification.validator.OfflineCalculatedFlagValidator;
 import hu.agnos.cube.specification.validator.SequenceValidator;
 import hu.agnos.cube.specification.util.PostfixToInfixConverter;
 
@@ -103,7 +103,7 @@ public class CubeSpecificationRepo {
             cube = validatedCube;
         }
 
-        validatedCube = PartitionedFlagValidator.validatePartitionedFlag(cube);
+        validatedCube = OfflineCalculatedFlagValidator.validatePartitionedFlag(cube);
         if (validatedCube != null) {
             isChanged = true;
             cube = validatedCube;

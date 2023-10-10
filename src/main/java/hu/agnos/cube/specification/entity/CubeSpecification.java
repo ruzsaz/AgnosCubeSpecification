@@ -124,11 +124,11 @@ public class CubeSpecification {
     }
 
     @JsonIgnore
-    public List<String> getPartitionedHierarchyList() {
+    public List<String> getisOfflineCalculatedHierarchyList() {
         List<String> result = new ArrayList<>();
 
         for (HierarchySpecification hier : this.hierarchies) {
-            if (hier.isPartitioned()) {
+            if (hier.isOfflineCalculated()) {
                 if (!result.contains(hier.getUniqueName())) {
                     result.add(hier.getUniqueName());
                 }

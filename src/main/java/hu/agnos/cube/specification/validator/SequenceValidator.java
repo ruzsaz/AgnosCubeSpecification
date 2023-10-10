@@ -66,7 +66,7 @@ public class SequenceValidator {
 
     private static List<HierarchySpecification> getSortedPartitionedHierarchyList(CubeSpecification cube) {
         List<HierarchySpecification> result = new ArrayList<>();
-        for (String hierName : cube.getPartitionedHierarchyList()) {
+        for (String hierName : cube.getisOfflineCalculatedHierarchyList()) {
             result.add(cube.getHierarchyByName(hierName));
         }
         Collections.sort(result, (h1, h2) -> {
@@ -77,7 +77,7 @@ public class SequenceValidator {
 
     private static List<HierarchySpecification> getSortedNotPartitionedHierarchyList(CubeSpecification cube) {
         List<HierarchySpecification> result = new ArrayList<>();
-        List<String> partitionedHierarchyNameList = cube.getPartitionedHierarchyList();
+        List<String> partitionedHierarchyNameList = cube.getisOfflineCalculatedHierarchyList();
 
         for (HierarchySpecification hier : cube.getHierarchies()) {
             if (!partitionedHierarchyNameList.contains(hier.getUniqueName())) {

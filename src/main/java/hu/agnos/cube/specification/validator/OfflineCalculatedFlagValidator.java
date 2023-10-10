@@ -11,16 +11,16 @@ import hu.agnos.cube.specification.entity.CubeSpecification;
  *
  * @author parisek
  */
-public class PartitionedFlagValidator {
+public class OfflineCalculatedFlagValidator {
 
     public static CubeSpecification validatePartitionedFlag(CubeSpecification cube) {
         boolean isChange = false;
         for (AggregationSpecification aggregation : cube.getAggregations()) {
             if (!aggregation.getAggregationFunction().toLowerCase().equals("sum")) {
                 String hierarchyName = aggregation.getHierarchyName();
-                if (!cube.getHierarchyByName(hierarchyName).isPartitioned()) {
+                if (!cube.getHierarchyByName(hierarchyName).isOfflineCalculated()) {
                     isChange = true;
-                    cube.getHierarchyByName(hierarchyName).setPartitioned(true);
+                    cube.getHierarchyByName(hierarchyName).setOfflineCalculated(true);
                 }
             }
         }

@@ -32,7 +32,7 @@ public class HierarchySpecification {
     private int order;
 
     @JacksonXmlProperty(isAttribute = true)
-    private boolean isPartitioned;
+    private boolean isOfflineCalculated;
 
     @Getter
     @JacksonXmlElementWrapper(localName = "Levels")
@@ -44,8 +44,8 @@ public class HierarchySpecification {
     }
 
     @JsonIgnore
-    public boolean isPartitioned() {
-        return isPartitioned;
+    public boolean isOfflineCalculated() {
+        return isOfflineCalculated;
     }
 
     
@@ -53,7 +53,7 @@ public class HierarchySpecification {
         this();
         this.uniqueName = uniqueName;
         this.order = order;
-        this.isPartitioned = isPartitioned;
+        this.isOfflineCalculated = isPartitioned;
     }
 
     public void addLevel(LevelSpecification entity) {
@@ -134,8 +134,9 @@ public class HierarchySpecification {
 
     @Override
     public String toString() {
-        return "HierarchySpecification{" + "uniqueName=" + uniqueName + ", order=" + order + ", isPartitioned=" + isPartitioned + ", levels=" + levels + '}';
+        return "HierarchySpecification{" + "uniqueName=" + uniqueName + ", order=" + order + ", isOfflineCalculated=" + isOfflineCalculated + ", levels=" + levels + '}';
     }
+
 
    
 }
