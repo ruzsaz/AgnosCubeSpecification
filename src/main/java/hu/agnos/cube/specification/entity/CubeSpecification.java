@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package hu.agnos.cube.specification.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -124,7 +119,7 @@ public class CubeSpecification {
     }
 
     @JsonIgnore
-    public List<String> getisOfflineCalculatedHierarchyList() {
+    public List<String> getIsOfflineCalculatedHierarchyList() {
         List<String> result = new ArrayList<>();
 
         for (HierarchySpecification hier : this.hierarchies) {
@@ -136,7 +131,7 @@ public class CubeSpecification {
         }
 
         for (AggregationSpecification agg : this.aggregations) {
-            if (!agg.getAggregationFunction().toLowerCase().equals("sum")) {
+            if (!agg.getAggregationFunction().equalsIgnoreCase("sum")) {
                 if (!result.contains(agg.getHierarchyName())) {
                     result.add(agg.getHierarchyName());
                 }

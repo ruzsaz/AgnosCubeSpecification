@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package hu.agnos.cube.specification.validator;
 
 import hu.agnos.cube.specification.entity.HierarchySpecification;
@@ -17,7 +13,7 @@ public class HierarchyNameValidator {
 
     public static String isValid(List<HierarchySpecification> hiererchies) {
         String result = "";
-        Set tmp = new HashSet();
+        Set<String> tmp = new HashSet<>();
         for (HierarchySpecification h : hiererchies) {
             String hierarchyName = h.getUniqueName();
             if (tmp.contains(hierarchyName)) {

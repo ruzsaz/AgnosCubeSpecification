@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package hu.agnos.cube.specification.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -48,7 +43,7 @@ public class LevelSpecification {
     }   
     
     public String getColumnListToOLAPSelectStatement(boolean isInOLAPGroupSelection) {
-        String result = "";
+        String result;
         if (!isInOLAPGroupSelection) {
             if (!codeColumnSourceName.equals(nameColumnName)) {
                 result = " 'All' as " + codeColumnSourceName + ", 'All' as " + nameColumnName;

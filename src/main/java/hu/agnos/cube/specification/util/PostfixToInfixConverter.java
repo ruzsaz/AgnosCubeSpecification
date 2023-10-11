@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package hu.agnos.cube.specification.util;
 
 import hu.agnos.cube.specification.exception.InvalidPostfixExpressionException;
@@ -14,31 +10,20 @@ import java.util.Stack;
 public class PostfixToInfixConverter {
 
       public static boolean isOperator(String text) {
-        return text.equals("+")
-                || text.equals("-")
-                || text.equals("*")
-                || text.equals("/")
-                || text.equals("^")
-                || text.equals("%");
+          return text != null && text.length() == 1
+                  && InfixToPostfixConverter.isOperator(text.toCharArray()[0]);
+     }
+
+    public static boolean includeOperator(String text) {
+        return text != null && (text.contains("+") || text.contains("-") || text.contains("/") || text.contains("*") || text.contains("^"));
     }
 
-    public static boolean isLower(String c1, String c2) {
-        if ((c1.equals("+") || c1.equals("-"))
-                && (c2.equals("*") || c2.equals("/") || c2.equals("^") || c2.equals("%"))) {
-            return true;
-        }
-        return false;
-    }
-
-    
     // Converting the given postfix expression to 
     // infix expression
     public static String convert(String postfix) throws InvalidPostfixExpressionException {
-          // Create stack object
+
         Stack<String> s = new Stack<>();
 
-        String previousOprator = "";
-   
         for(String actualSegment : postfix.split(" ")){
             
             // Check whether given postfix location
@@ -47,15 +32,15 @@ public class PostfixToInfixConverter {
                 // When operator exist
                 // Check that two operands exist or not
                 if (s.size() > 1) {
-                    String  op1 = s.pop();
-                    String  op2 = s.pop();
-                    if (isLower(previousOprator, actualSegment)) {
-                        s.push( "( " + op2 + " ) " + actualSegment + " ( " + op1 + " )");
-                    } else {
-                        s.push( op2 + " " + actualSegment  + " " + op1);
+                    String operand1 = s.pop();
+                    String operand2 = s.pop();
+                    if (includeOperator(operand1)) {
+                        operand1 = "(" + operand1 + ")";
                     }
-                    previousOprator = actualSegment;
-                    
+                    if (includeOperator(operand2)) {
+                        operand2 = "(" + operand2 + ")";
+                    }
+                    s.push( operand2 + " " + actualSegment  + " " + operand1);
                 } else {
                     throw new InvalidPostfixExpressionException(postfix);
                 }

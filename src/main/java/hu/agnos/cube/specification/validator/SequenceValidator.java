@@ -1,13 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package hu.agnos.cube.specification.validator;
 
 import hu.agnos.cube.specification.entity.CubeSpecification;
 import hu.agnos.cube.specification.entity.HierarchySpecification;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -36,7 +31,7 @@ public class SequenceValidator {
             i++;
         }
         
-        if (! isSorted(cube, tmpHierarchies)) {
+        if (!isSorted(cube, tmpHierarchies)) {
             isChange = true;
             cube.getHierarchies().clear();
             for (HierarchySpecification hier : tmpHierarchies) {
@@ -54,7 +49,7 @@ public class SequenceValidator {
         }
 
         for (int i = 0; i < cubeHierarchies.size(); i++) {
-            if (cubeHierarchies.get(i).getUniqueName() != actualHierarchies.get(i).getUniqueName()) {
+            if (!cubeHierarchies.get(i).getUniqueName().equals(actualHierarchies.get(i).getUniqueName())) {
                 return false;
             }
             if (cubeHierarchies.get(i).getOrder() != actualHierarchies.get(i).getOrder()) {
@@ -66,18 +61,16 @@ public class SequenceValidator {
 
     private static List<HierarchySpecification> getSortedPartitionedHierarchyList(CubeSpecification cube) {
         List<HierarchySpecification> result = new ArrayList<>();
-        for (String hierName : cube.getisOfflineCalculatedHierarchyList()) {
+        for (String hierName : cube.getIsOfflineCalculatedHierarchyList()) {
             result.add(cube.getHierarchyByName(hierName));
         }
-        Collections.sort(result, (h1, h2) -> {
-            return h2.getOrder() - h1.getOrder();
-        });
+        result.sort((h1, h2) -> h2.getOrder() - h1.getOrder());
         return result;
     }
 
     private static List<HierarchySpecification> getSortedNotPartitionedHierarchyList(CubeSpecification cube) {
         List<HierarchySpecification> result = new ArrayList<>();
-        List<String> partitionedHierarchyNameList = cube.getisOfflineCalculatedHierarchyList();
+        List<String> partitionedHierarchyNameList = cube.getIsOfflineCalculatedHierarchyList();
 
         for (HierarchySpecification hier : cube.getHierarchies()) {
             if (!partitionedHierarchyNameList.contains(hier.getUniqueName())) {
@@ -86,9 +79,7 @@ public class SequenceValidator {
                 }
             }
         }
-        Collections.sort(result, (h1, h2) -> {
-            return h2.getOrder() - h1.getOrder();
-        });
+        result.sort((h1, h2) -> h2.getOrder() - h1.getOrder());
         return result;
     }
 

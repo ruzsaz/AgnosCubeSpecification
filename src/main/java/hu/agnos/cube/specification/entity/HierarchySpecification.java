@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package hu.agnos.cube.specification.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -40,7 +35,7 @@ public class HierarchySpecification {
     private final List<LevelSpecification> levels;
 
     public HierarchySpecification() {
-        this.levels = new ArrayList();
+        this.levels = new ArrayList<>();
     }
 
     @JsonIgnore

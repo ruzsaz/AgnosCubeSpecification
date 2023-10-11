@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package hu.agnos.cube.specification.repo;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -60,7 +55,7 @@ public class CubeSpecificationRepo {
         return xmlCube;
     }
 
-    public void setCubeSpecification(String path, CubeSpecification cubeSpec) throws JsonProcessingException, IOException, InvalidPostfixExpressionException {
+    public void setCubeSpecification(String path, CubeSpecification cubeSpec) throws IOException, InvalidPostfixExpressionException {
         XmlMapper xmlMapper = new XmlMapper();
         xmlMapper.enable(SerializationFeature.INDENT_OUTPUT);
         xmlMapper.configure(ToXmlGenerator.Feature.WRITE_XML_DECLARATION, true);
@@ -88,12 +83,12 @@ public class CubeSpecificationRepo {
     private CubeSpecification validateCubeSpecification(String path, CubeSpecification cube) throws NameOfHierarchySpecificationNotUniqueException, NameOfMeasureSpecificationNotUniqueException, IOException, InvalidPostfixExpressionException {
         boolean isChanged = false;
         String validationResult = HierarchyNameValidator.isValid(cube.getHierarchies());
-        if (!validationResult.equals("")) {
+        if (!validationResult.isEmpty()) {
             throw new NameOfHierarchySpecificationNotUniqueException(validationResult);
         }
 
         validationResult = MeasureNameValidator.isValid(cube.getMeasures());
-        if (!validationResult.equals("")) {
+        if (!validationResult.isEmpty()) {
             throw new NameOfMeasureSpecificationNotUniqueException(validationResult);
         }
 
@@ -126,7 +121,7 @@ public class CubeSpecificationRepo {
         xmlMapper.enable(SerializationFeature.INDENT_OUTPUT);
         xmlMapper.configure(ToXmlGenerator.Feature.WRITE_XML_DECLARATION, true);
 
-        //deepcopy
+        //deep-copy
         CubeSpecification clone = xmlMapper.readValue(xmlMapper.writeValueAsString(origin), CubeSpecification.class);
 
         for (MeasureSpecification originMeasure : origin.getMeasures()) {

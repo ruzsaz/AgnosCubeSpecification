@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package hu.agnos.cube.specification.util;
 
 import java.util.Stack;
@@ -24,7 +20,7 @@ public class InfixToPostfixConverter {
                 //if operators
                 if (isOperator(c)) {
                     result.append(' ');
-                    while (!stackForOperators.empty() && isBiger(stackForOperators.peek(), c)) {
+                    while (!stackForOperators.empty() && isFirstBiggerOrEqualInPrecedence(stackForOperators.peek(), c)) {
                         result.append(stackForOperators.pop());
                         result.append(' ');
                     }
@@ -46,8 +42,9 @@ public class InfixToPostfixConverter {
         result.append(' ');
         while (!stackForOperators.empty()) {
             result.append(stackForOperators.pop());
+            result.append(' ');
         }
-        return result.toString();
+        return result.toString().trim();
     }
 
     public static boolean isOperator(char c) {
@@ -55,15 +52,13 @@ public class InfixToPostfixConverter {
                 || c == '-'
                 || c == '*'
                 || c == '/'
-                || c == '^'
-                || c == '%';
+                || c == '^';
     }
 
-    public static boolean isBiger(char c2, char c1) {
-        if ((c1 == '+' || c1 == '-') && (c2 == '*' || c2 == '/' || c2 == '^' || c2 == '%')) {
-            return true;
-        }
-        return false;
+    public static boolean isFirstBiggerOrEqualInPrecedence(char c1, char c2) {
+        return ( (c2 == '+' || c2 == '-') && isOperator(c1) )
+                || ( (c2 == '*' || c2 == '/') && (c1 == '*' || c1 == '/' || c1 == '^') )
+                || (c2 == '^' && c1 == '^');
     }
 
 }
