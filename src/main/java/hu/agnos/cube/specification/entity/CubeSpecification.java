@@ -10,6 +10,7 @@ import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 /**
  *
@@ -19,6 +20,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JacksonXmlRootElement(localName = "Cube")
+@ToString
 public class CubeSpecification {
 
     @Getter
@@ -50,33 +52,39 @@ public class CubeSpecification {
     private List<MeasureSpecification> measures;
 
     @Getter
-    @JacksonXmlElementWrapper(localName = "Hierarchies")
-    @JacksonXmlProperty(localName = "Hierarchy")
-    private final List<HierarchySpecification> hierarchies;
+    @JacksonXmlElementWrapper(localName = "Dimensions")
+    @JacksonXmlProperty(localName = "Dimension")
+    private final List<DimensionSpecification> dimensions;
 
     @Getter
     @JacksonXmlElementWrapper(localName = "Aggregations")
     @JacksonXmlProperty(localName = "Aggregation")
     private final List<AggregationSpecification> aggregations;
 
+    @Getter
+    @JacksonXmlElementWrapper(localName = "ExtraCalculations")
+    @JacksonXmlProperty(localName = "PostCalculation")
+    private final List<PostCalculationSpecification> extraCalculations;
+
     public CubeSpecification() {
         this.measures = new ArrayList<>();
-        this.hierarchies = new ArrayList<>();
+        this.dimensions = new ArrayList<>();
         this.aggregations = new ArrayList<>();
+        this.extraCalculations = new ArrayList<>();
     }
 
-    public void addHierarchy(HierarchySpecification hierarchy) {
-        this.hierarchies.add(hierarchy);
+    public void addDimension(DimensionSpecification hierarchy) {
+        this.dimensions.add(hierarchy);
     }
 
     public void addMeasure(MeasureSpecification measure) {
         this.measures.add(measure);
     }
 
-    public HierarchySpecification getHierarchyByName(String hierarchyName) {
-        HierarchySpecification result = null;
-        for (HierarchySpecification hier : this.hierarchies) {
-            if (hier.getUniqueName().equals(hierarchyName)) {
+    public DimensionSpecification getDimensionByName(String dimensionName) {
+        DimensionSpecification result = null;
+        for (DimensionSpecification hier : this.dimensions) {
+            if (hier.getUniqueName().equals(dimensionName)) {
                 result = hier;
                 break;
             }
@@ -91,7 +99,7 @@ public class CubeSpecification {
     public AggregationSpecification getAggregationByName(String hierarchyName, String measureName) {
         AggregationSpecification result = null;
         for (AggregationSpecification a : this.aggregations) {
-            if (a.getHierarchyName().equals(hierarchyName) && a.getMeasureName().equals(measureName)) {
+            if (a.getDimensionName().equals(hierarchyName) && a.getMeasureName().equals(measureName)) {
                 result = a;
                 break;
             }
@@ -99,18 +107,18 @@ public class CubeSpecification {
         return result;
     }
 
-    public List<AggregationSpecification> getAggregationsByName(String hierarchyName) {
+    public List<AggregationSpecification> getAggregationsByDimensionName(String dimensionName) {
         List<AggregationSpecification> result = new ArrayList<>();
         for (AggregationSpecification a : this.aggregations) {
-            if (a.getHierarchyName().equals(hierarchyName)) {
+            if (a.getDimensionName().equals(dimensionName)) {
                 result.add(a);
             }
         }
         return result;
     }
 
-    public String getAggregationFunctionByName(String hierarchyName, String measureName) {
-        AggregationSpecification agg = getAggregationByName(hierarchyName, measureName);
+    public String getAggregationFunctionByName(String dimensionName, String measureName) {
+        AggregationSpecification agg = getAggregationByName(dimensionName, measureName);
         if (agg != null) {
             return agg.getAggregationFunction();
         } else {
@@ -118,11 +126,15 @@ public class CubeSpecification {
         }
     }
 
+    public void addPostCalculation(PostCalculationSpecification calculation) {
+        this.extraCalculations.add(calculation);
+    }
+
     @JsonIgnore
-    public List<String> getIsOfflineCalculatedHierarchyList() {
+    public List<String> getIsOfflineCalculatedDimensonList() {
         List<String> result = new ArrayList<>();
 
-        for (HierarchySpecification hier : this.hierarchies) {
+        for (DimensionSpecification hier : this.dimensions) {
             if (hier.isOfflineCalculated()) {
                 if (!result.contains(hier.getUniqueName())) {
                     result.add(hier.getUniqueName());
@@ -132,8 +144,8 @@ public class CubeSpecification {
 
         for (AggregationSpecification agg : this.aggregations) {
             if (!agg.getAggregationFunction().equalsIgnoreCase("sum")) {
-                if (!result.contains(agg.getHierarchyName())) {
-                    result.add(agg.getHierarchyName());
+                if (!result.contains(agg.getDimensionName())) {
+                    result.add(agg.getDimensionName());
                 }
             }
         }
@@ -141,10 +153,10 @@ public class CubeSpecification {
     }
 
     @JsonIgnore
-    public List<String> getDistinctHierarchyColumnList() {
+    public List<String> getDistinctDimensionColumnList() {
         List<String> result = new ArrayList<>();
-        for (HierarchySpecification hier : this.getHierarchies()) {
-            for (LevelSpecification level : hier.getLevels()) {
+        for (DimensionSpecification dim : this.dimensions) {
+            for (LevelSpecification level : dim.getLevels()) {
                 if (!result.contains(level.getCodeColumnSourceName())) {
                     result.add(level.getCodeColumnSourceName());
                 }
@@ -175,10 +187,6 @@ public class CubeSpecification {
         }
     }
 
-    @Override
-    public String toString() {
-        return "CubeSpecification{" + "cubeUniqueName=" + cubeUniqueName + ", sourceDBDriver=" + sourceDBDriver + ", sourceDBURL=" + sourceDBURL + ", sourceDBUser=" + sourceDBUser + ", sourceDBPassword=" + sourceDBPassword + ", isValid=" + isValid + ", measures=" + measures + ", hierarchies=" + hierarchies + ", aggregations=" + aggregations + '}';
-    }
 
 
 }

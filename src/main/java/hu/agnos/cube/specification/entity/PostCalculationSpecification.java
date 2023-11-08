@@ -1,7 +1,6 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package hu.agnos.cube.specification.entity;
 
@@ -21,8 +20,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class AggregationSpecification {
-
+public class PostCalculationSpecification {
     @JacksonXmlProperty(isAttribute = true)
     private String measureName;
 
@@ -30,6 +28,6 @@ public class AggregationSpecification {
     private String dimensionName;
 
     @JacksonXmlProperty(isAttribute = true)
-    private String aggregationFunction;
+    private String type;
 
 }

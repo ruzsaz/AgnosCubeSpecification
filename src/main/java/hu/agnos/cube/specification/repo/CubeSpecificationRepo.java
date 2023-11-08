@@ -82,7 +82,7 @@ public class CubeSpecificationRepo {
 
     private CubeSpecification validateCubeSpecification(String path, CubeSpecification cube) throws NameOfHierarchySpecificationNotUniqueException, NameOfMeasureSpecificationNotUniqueException, IOException, InvalidPostfixExpressionException {
         boolean isChanged = false;
-        String validationResult = HierarchyNameValidator.isValid(cube.getHierarchies());
+        String validationResult = HierarchyNameValidator.isValid(cube.getDimensions());
         if (!validationResult.isEmpty()) {
             throw new NameOfHierarchySpecificationNotUniqueException(validationResult);
         }

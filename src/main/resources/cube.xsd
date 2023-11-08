@@ -17,6 +17,11 @@
          <xs:enumeration value="sum" />
       </xs:restriction>
    </xs:simpleType>
+   <xs:simpleType name="PostCalculationType">
+      <xs:restriction base="xs:string">
+         <xs:enumeration value="KaplanMeier" />
+      </xs:restriction>
+   </xs:simpleType>
    <xs:element name="Cube">
       <xs:complexType>
          <xs:sequence>
@@ -36,10 +41,10 @@
                   </xs:sequence>
                </xs:complexType>
             </xs:element>
-            <xs:element name="Hierarchies">
+            <xs:element name="Dimensions">
                <xs:complexType>
                   <xs:sequence>
-                     <xs:element name="Hierarchy" minOccurs="1" maxOccurs="unbounded">
+                     <xs:element name="Dimension" minOccurs="1" maxOccurs="unbounded">
                         <xs:complexType>
                            <xs:sequence>
                               <xs:element name="Levels">
@@ -72,8 +77,21 @@
                      <xs:element name="Aggregation" minOccurs="0" maxOccurs="unbounded">
                         <xs:complexType>
                            <xs:attribute name="measureName" type="xs:string" use="required" />
-                           <xs:attribute name="hierarchyName" type="xs:string" use="required" />
+                           <xs:attribute name="dimensionName" type="xs:string" use="required" />
                            <xs:attribute name="aggregationFunction" type="AggregationFunction" use="required" />
+                        </xs:complexType>
+                     </xs:element>
+                  </xs:sequence>
+               </xs:complexType>
+            </xs:element>
+            <xs:element name="ExtraCalculations">
+               <xs:complexType>
+                  <xs:sequence>
+                     <xs:element name="PostCalculation" minOccurs="0" maxOccurs="unbounded">
+                        <xs:complexType>
+                           <xs:attribute name="measureName" type="xs:string" use="required" />
+                           <xs:attribute name="dimensionName" type="xs:string" use="required" />
+                           <xs:attribute name="type" type="PostCalculationType" use="required" />
                         </xs:complexType>
                      </xs:element>
                   </xs:sequence>

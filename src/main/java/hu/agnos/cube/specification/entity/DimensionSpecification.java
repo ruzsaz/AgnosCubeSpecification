@@ -8,6 +8,7 @@ import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 /**
  *
@@ -16,7 +17,8 @@ import lombok.Setter;
 
 @Setter
 @AllArgsConstructor
-public class HierarchySpecification {
+@ToString
+public class DimensionSpecification {
 
     @Getter
     @JacksonXmlProperty(isAttribute = true)
@@ -34,7 +36,7 @@ public class HierarchySpecification {
     @JacksonXmlProperty(localName = "Level")
     private final List<LevelSpecification> levels;
 
-    public HierarchySpecification() {
+    public DimensionSpecification() {
         this.levels = new ArrayList<>();
     }
 
@@ -44,7 +46,7 @@ public class HierarchySpecification {
     }
 
     
-    public HierarchySpecification(String uniqueName, int order, boolean isPartitioned) {
+    public DimensionSpecification(String uniqueName, int order, boolean isPartitioned) {
         this();
         this.uniqueName = uniqueName;
         this.order = order;
@@ -126,12 +128,5 @@ public class HierarchySpecification {
             return "";
         }
     }
-
-    @Override
-    public String toString() {
-        return "HierarchySpecification{" + "uniqueName=" + uniqueName + ", order=" + order + ", isOfflineCalculated=" + isOfflineCalculated + ", levels=" + levels + '}';
-    }
-
-
-   
+  
 }

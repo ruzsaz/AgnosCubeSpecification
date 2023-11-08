@@ -13,10 +13,10 @@ public class OfflineCalculatedFlagValidator {
         boolean isChange = false;
         for (AggregationSpecification aggregation : cube.getAggregations()) {
             if (!aggregation.getAggregationFunction().equalsIgnoreCase("sum")) {
-                String hierarchyName = aggregation.getHierarchyName();
-                if (!cube.getHierarchyByName(hierarchyName).isOfflineCalculated()) {
+                String hierarchyName = aggregation.getDimensionName();
+                if (!cube.getDimensionByName(hierarchyName).isOfflineCalculated()) {
                     isChange = true;
-                    cube.getHierarchyByName(hierarchyName).setOfflineCalculated(true);
+                    cube.getDimensionByName(hierarchyName).setOfflineCalculated(true);
                 }
             }
         }

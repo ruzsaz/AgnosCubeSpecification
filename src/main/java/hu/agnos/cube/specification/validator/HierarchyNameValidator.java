@@ -1,6 +1,6 @@
 package hu.agnos.cube.specification.validator;
 
-import hu.agnos.cube.specification.entity.HierarchySpecification;
+import hu.agnos.cube.specification.entity.DimensionSpecification;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -11,10 +11,10 @@ import java.util.Set;
  */
 public class HierarchyNameValidator {
 
-    public static String isValid(List<HierarchySpecification> hiererchies) {
+    public static String isValid(List<DimensionSpecification> hiererchies) {
         String result = "";
         Set<String> tmp = new HashSet<>();
-        for (HierarchySpecification h : hiererchies) {
+        for (DimensionSpecification h : hiererchies) {
             String hierarchyName = h.getUniqueName();
             if (tmp.contains(hierarchyName)) {
                 result = hierarchyName;
