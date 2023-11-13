@@ -26,6 +26,9 @@ public class MeasureSpecification {
     @JacksonXmlProperty(isAttribute = true)
     private String calculatedFormula;
     
+    @JacksonXmlProperty(isAttribute = true)
+    private boolean isVirtual;
+    
     public void setCalculatedFormula(String calculatedFormula) {
         this.calculatedFormula = InfixToPostfixConverter.convert(calculatedFormula);
     }     
