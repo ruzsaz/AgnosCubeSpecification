@@ -96,10 +96,10 @@ public class CubeSpecification {
         this.aggregations.add(aggregation);
     }
 
-    public AggregationSpecification getAggregationByName(String hierarchyName, String measureName) {
+    public AggregationSpecification getAggregationByName(String dimensionName, String measureName) {
         AggregationSpecification result = null;
         for (AggregationSpecification a : this.aggregations) {
-            if (a.getDimensionName().equals(hierarchyName) && a.getMeasureName().equals(measureName)) {
+            if (a.getDimensionName().equals(dimensionName) && a.getMeasureName().equals(measureName)) {
                 result = a;
                 break;
             }
@@ -172,7 +172,7 @@ public class CubeSpecification {
     public List<String> getDistinctMeasureColumnList() {
         List<String> result = new ArrayList<>();
         for (MeasureSpecification measure : getMeasures()) {
-            if (!result.contains(measure.getUniqueName()) && !measure.isCalculatedMeasure()) {
+            if (!result.contains(measure.getUniqueName()) && !measure.isCalculatedMeasure() && !measure.isVirtual()) {
                 result.add(measure.getUniqueName());
             }
         }

@@ -8,26 +8,43 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 /**
  *
  * @author parisek
  */
-@Getter
+
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
+@ToString
 public class MeasureSpecification {
 
+    @Getter
     @Setter
     @JacksonXmlProperty(isAttribute = true)
     private String uniqueName;
+
+    @Getter
+    @Setter
+    @JacksonXmlProperty(isAttribute = true)
+    private String dimensionName;
+
+    @Getter
+    @Setter
+    @JacksonXmlProperty(isAttribute = true)
+    private String levelName;
+
+    @Getter
+    @Setter
+    @JacksonXmlProperty(isAttribute = true)
+    private String type;
     
+    @Getter
     @JacksonXmlProperty(isAttribute = true)
     private String calculatedFormula;
     
-    @JacksonXmlProperty(isAttribute = true)
-    private boolean isVirtual;
     
     public void setCalculatedFormula(String calculatedFormula) {
         this.calculatedFormula = InfixToPostfixConverter.convert(calculatedFormula);
@@ -40,13 +57,11 @@ public class MeasureSpecification {
     @JsonIgnore    
     public boolean isCalculatedMeasure(){
         return this.calculatedFormula != null;
-    }
-
-    @Override
-    public String toString() {
-        return "MeasureSpecification{" + "uniqueName=" + uniqueName + ", calculatedFormula=" + calculatedFormula + '}';
-    }
+    } 
     
-    
+    @JsonIgnore    
+    public boolean isVirtual(){
+        return this.dimensionName != null;
+    }
    
 }

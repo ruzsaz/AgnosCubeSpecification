@@ -27,9 +27,6 @@ public class PostCalculationSpecification {
     @JacksonXmlProperty(isAttribute = true)
     private String dimensionName;
 
-     @JacksonXmlProperty(isAttribute = true)
-    private String levelName;
-
     @JacksonXmlProperty(isAttribute = true)
     private String type;
 
