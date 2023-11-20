@@ -41,8 +41,7 @@
                         <xs:complexType>
                            <xs:attribute name="uniqueName" type="xs:string" use="required" />
                            <xs:attribute name="calculatedFormula" type="xs:string" use="optional" />
-                           <xs:attribute name="dimensionName" type="xs:string" use="optional" />                           
-                           <xs:attribute name="levelName" type="xs:string" use="optional" />                       
+                           <xs:attribute name="dimensionName" type="xs:string" use="optional" />                   
                            <xs:attribute name="type" type="MeasureType" use="optional" />                            
                         </xs:complexType>
                      </xs:element>
@@ -106,8 +105,6 @@
                </xs:complexType>
             </xs:element>
          </xs:sequence>
-         <xs:attribute name="cubeUniqueName" type="xs:string" use="required" />
-         <xs:attribute name="isValid" type="xs:boolean" use="required" />
       </xs:complexType>
    </xs:element>
 </xs:schema>

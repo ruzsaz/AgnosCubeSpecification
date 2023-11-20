@@ -34,11 +34,6 @@ public class MeasureSpecification {
     @Getter
     @Setter
     @JacksonXmlProperty(isAttribute = true)
-    private String levelName;
-
-    @Getter
-    @Setter
-    @JacksonXmlProperty(isAttribute = true)
     private String type;
     
     @Getter

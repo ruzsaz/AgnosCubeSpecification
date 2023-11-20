@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 /**
  *
@@ -16,7 +17,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-
+@ToString
 public class LevelSpecification {
 
     @Getter
@@ -31,39 +32,39 @@ public class LevelSpecification {
     @JacksonXmlProperty(isAttribute = true)
     private String codeColumnName;
     
-    @JacksonXmlProperty(isAttribute = true)
-    private String codeColumnSourceName;
-    
+//    @JacksonXmlProperty(isAttribute = true)
+//    private String codeColumnSourceName;
+//    
     @Getter
     @JacksonXmlProperty(isAttribute = true)
     private String nameColumnName;
 
-    public String getCodeColumnSourceName() {
-        return codeColumnSourceName == null ? codeColumnName : codeColumnSourceName;
-    }   
-    
-    public String getColumnListToOLAPSelectStatement(boolean isInOLAPGroupSelection) {
+//    public String getCodeColumnSourceName() {
+//        return codeColumnSourceName == null ? codeColumnName : codeColumnSourceName;
+//    }   
+//    
+    public String getColumnListToOfflineClculatedSelectStatement(boolean isInOfflineCalculatedGroupSelection) {
         String result;
-        if (!isInOLAPGroupSelection) {
-            if (!codeColumnSourceName.equals(nameColumnName)) {
-                result = " 'All' as " + codeColumnSourceName + ", 'All' as " + nameColumnName;
+        if (!isInOfflineCalculatedGroupSelection) {
+            if (!codeColumnName.equals(nameColumnName)) {
+                result = " 'All' as " + codeColumnName + ", 'All' as " + nameColumnName;
             } else {
-                result = " 'All' as " + codeColumnSourceName;
+                result = " 'All' as " + codeColumnName;
             }
         } else {
-            result = this.codeColumnSourceName;
-            if (!codeColumnSourceName.equals(nameColumnName)) {
+            result = this.codeColumnName;
+            if (!codeColumnName.equals(nameColumnName)) {
                 result = result + ", " + nameColumnName;
             }
         }
         return result;
     }
 
-    public String getColumnListToOLAPGroupByStatement(boolean isInOLAPGroupSelection) {
+    public String getColumnListToOLAPGroupByStatement(boolean isInOfflineCalculatedGroupSelection) {
         String result = "";
-        if (isInOLAPGroupSelection) {
-            result = this.codeColumnSourceName;
-            if (!codeColumnSourceName.equals(nameColumnName)) {
+        if (isInOfflineCalculatedGroupSelection) {
+            result = this.codeColumnName;
+            if (!codeColumnName.equals(nameColumnName)) {
                 result = result + ", " + nameColumnName;
             }
         }
@@ -73,17 +74,13 @@ public class LevelSpecification {
     @JsonIgnore    
     public List<String> getColumnListToOLAPBuilding() {
         List<String> result = new ArrayList<>();
-        result.add(codeColumnSourceName);
-        if (!codeColumnSourceName.equals(nameColumnName)) {
+        result.add(codeColumnName);
+        if (!codeColumnName.equals(nameColumnName)) {
             result.add(nameColumnName);
         }
         return result;
     }
 
-    @Override
-    public String toString() {
-        return "LevelSpecification{" + "uniqueName=" + uniqueName + ", depth=" + depth + ", codeColumnName=" + codeColumnName + ", codeColumnSourceName=" + codeColumnSourceName + ", nameColumnName=" + nameColumnName + '}';
-    }
     
     
 }

@@ -18,7 +18,7 @@ public class AgnosCubeSpecification {
 
     public static void main(String[] args) throws NameOfHierarchySpecificationNotUniqueException, NameOfMeasureSpecificationNotUniqueException, InvalidPostfixExpressionException, IOException {
         CubeSpecificationRepo handler = new CubeSpecificationRepo();
-        CubeSpecification cube = handler.findCubeSpecificationByPath("/home/parisek/AGNOS_HOME/AgnosCubeBuilder/Meta/CRC_KM.cube.xml");
+        CubeSpecification cube = handler.findCubeSpecificationByPath("/home/parisek/AGNOS_HOME/AgnosCubeBuilder/Meta/CRC_NEW.cube.xml");
         System.out.println(cube.toString());
     }
 }

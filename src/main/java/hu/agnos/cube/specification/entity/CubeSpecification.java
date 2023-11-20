@@ -7,6 +7,7 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -24,10 +25,6 @@ import lombok.ToString;
 public class CubeSpecification {
 
     @Getter
-    @JacksonXmlProperty(isAttribute = true)
-    private String cubeUniqueName;
-
-    @Getter
     @JacksonXmlProperty(localName = "SourceDBDriver")
     private String sourceDBDriver;
 
@@ -42,9 +39,6 @@ public class CubeSpecification {
     @Getter
     @JacksonXmlProperty(localName = "SourceDBPassword")
     private String sourceDBPassword;
-
-    @JacksonXmlProperty(isAttribute = true)
-    private boolean isValid;
 
     @Getter
     @JacksonXmlElementWrapper(localName = "Measures")
@@ -131,13 +125,13 @@ public class CubeSpecification {
     }
 
     @JsonIgnore
-    public List<String> getIsOfflineCalculatedDimensonList() {
+    public List<String> getOfflineCalculatedDimensonNameList() {
         List<String> result = new ArrayList<>();
 
-        for (DimensionSpecification hier : this.dimensions) {
-            if (hier.isOfflineCalculated()) {
-                if (!result.contains(hier.getUniqueName())) {
-                    result.add(hier.getUniqueName());
+        for (DimensionSpecification dim : this.dimensions) {
+            if (dim.isOfflineCalculated()) {
+                if (!result.contains(dim.getUniqueName())) {
+                    result.add(dim.getUniqueName());
                 }
             }
         }
@@ -157,10 +151,10 @@ public class CubeSpecification {
         List<String> result = new ArrayList<>();
         for (DimensionSpecification dim : this.dimensions) {
             for (LevelSpecification level : dim.getLevels()) {
-                if (!result.contains(level.getCodeColumnSourceName())) {
-                    result.add(level.getCodeColumnSourceName());
+                if (!result.contains(level.getCodeColumnName())) {
+                    result.add(level.getCodeColumnName());
                 }
-                if (!level.getNameColumnName().equals(level.getCodeColumnSourceName()) && !result.contains(level.getNameColumnName())) {
+                if (!level.getNameColumnName().equals(level.getCodeColumnName()) && !result.contains(level.getNameColumnName())) {
                     result.add(level.getNameColumnName());
                 }
             }
@@ -187,6 +181,15 @@ public class CubeSpecification {
         }
     }
 
+    public Optional<MeasureSpecification> getVirtualMeasuer(){
+        for(MeasureSpecification m : this.measures){
+            if(m.isVirtual()){
+                return Optional.of(m);
+            }
+        }
+       Optional<MeasureSpecification> empty = Optional.empty();
+       return empty;
+    }
 
 
 }

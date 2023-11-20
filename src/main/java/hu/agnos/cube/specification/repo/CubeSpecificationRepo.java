@@ -9,11 +9,11 @@ import hu.agnos.cube.specification.entity.MeasureSpecification;
 import hu.agnos.cube.specification.exception.InvalidPostfixExpressionException;
 import hu.agnos.cube.specification.exception.NameOfHierarchySpecificationNotUniqueException;
 import hu.agnos.cube.specification.exception.NameOfMeasureSpecificationNotUniqueException;
-import hu.agnos.cube.specification.validator.HierarchyNameValidator;
+import hu.agnos.cube.specification.validator.DimensionNameValidator;
 import hu.agnos.cube.specification.validator.LevelOrderValidator;
 import hu.agnos.cube.specification.validator.MeasureNameValidator;
 import hu.agnos.cube.specification.validator.OfflineCalculatedFlagValidator;
-import hu.agnos.cube.specification.validator.SequenceValidator;
+import hu.agnos.cube.specification.validator.OrderValidator;
 import hu.agnos.cube.specification.util.PostfixToInfixConverter;
 
 import java.io.File;
@@ -82,7 +82,7 @@ public class CubeSpecificationRepo {
 
     private CubeSpecification validateCubeSpecification(String path, CubeSpecification cube) throws NameOfHierarchySpecificationNotUniqueException, NameOfMeasureSpecificationNotUniqueException, IOException, InvalidPostfixExpressionException {
         boolean isChanged = false;
-        String validationResult = HierarchyNameValidator.isValid(cube.getDimensions());
+        String validationResult = DimensionNameValidator.isValid(cube.getDimensions());
         if (!validationResult.isEmpty()) {
             throw new NameOfHierarchySpecificationNotUniqueException(validationResult);
         }
@@ -104,7 +104,7 @@ public class CubeSpecificationRepo {
             cube = validatedCube;
         }
 
-        validatedCube = SequenceValidator.validatePartitionedFlag(cube);
+        validatedCube = OrderValidator.validateOrder(cube);
         if (validatedCube != null) {
             isChanged = true;
             cube = validatedCube;

@@ -9,7 +9,7 @@ import java.util.Set;
  *
  * @author parisek
  */
-public class HierarchyNameValidator {
+public class DimensionNameValidator {
 
     public static String isValid(List<DimensionSpecification> hiererchies) {
         String result = "";

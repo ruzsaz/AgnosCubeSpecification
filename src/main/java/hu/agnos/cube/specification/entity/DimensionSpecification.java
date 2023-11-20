@@ -106,7 +106,7 @@ public class DimensionSpecification {
         for (int i = 0; i < this.levels.size(); i++) {
             LevelSpecification l = this.levels.get(i);
             boolean isInOLAP = i < levels.size() - iteration - 1;
-            result.append(l.getColumnListToOLAPSelectStatement(isInOLAP)).append(", ");
+            result.append(l.getColumnListToOfflineClculatedSelectStatement(isInOLAP)).append(", ");
         }
 
         return result.substring(0, result.length() - 2);
