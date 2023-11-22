@@ -24,6 +24,8 @@
    </xs:simpleType>
   <xs:simpleType name="MeasureType">
       <xs:restriction base="xs:string">
+         <xs:enumeration value="Classical" />
+         <xs:enumeration value="Calculated" />
          <xs:enumeration value="CountDistinct" />
       </xs:restriction>
    </xs:simpleType> 
@@ -41,7 +43,6 @@
                         <xs:complexType>
                            <xs:attribute name="uniqueName" type="xs:string" use="required" />
                            <xs:attribute name="calculatedFormula" type="xs:string" use="optional" />
-                           <xs:attribute name="dimensionName" type="xs:string" use="optional" />                   
                            <xs:attribute name="type" type="MeasureType" use="optional" />                            
                         </xs:complexType>
                      </xs:element>

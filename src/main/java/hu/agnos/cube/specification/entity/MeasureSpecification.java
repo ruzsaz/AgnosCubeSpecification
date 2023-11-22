@@ -29,11 +29,6 @@ public class MeasureSpecification {
     @Getter
     @Setter
     @JacksonXmlProperty(isAttribute = true)
-    private String dimensionName;
-
-    @Getter
-    @Setter
-    @JacksonXmlProperty(isAttribute = true)
     private String type;
     
     @Getter
@@ -55,8 +50,14 @@ public class MeasureSpecification {
     } 
     
     @JsonIgnore    
-    public boolean isVirtual(){
-        return this.dimensionName != null;
+    public boolean isClassical(){
+        if(this.calculatedFormula != null){
+            return false;
+        }
+        if(this.type != null && !this.type.equals("Classical")){
+            return false;
+        }
+        return true;
     }
    
 }

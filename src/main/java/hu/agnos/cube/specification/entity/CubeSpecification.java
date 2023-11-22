@@ -163,10 +163,10 @@ public class CubeSpecification {
     }
 
     @JsonIgnore
-    public List<String> getDistinctMeasureColumnList() {
+    public List<String> getDistinctClassicalMeasureNameList() {
         List<String> result = new ArrayList<>();
         for (MeasureSpecification measure : getMeasures()) {
-            if (!result.contains(measure.getUniqueName()) && !measure.isCalculatedMeasure() && !measure.isVirtual()) {
+            if (!result.contains(measure.getUniqueName()) && measure.isClassical() ) {
                 result.add(measure.getUniqueName());
             }
         }
@@ -181,9 +181,9 @@ public class CubeSpecification {
         }
     }
 
-    public Optional<MeasureSpecification> getVirtualMeasuer(){
+    public Optional<MeasureSpecification> getCountDistinctMeasure(){
         for(MeasureSpecification m : this.measures){
-            if(m.isVirtual()){
+            if(m.getType()!= null && m.getType().equals("CountDistinct")){
                 return Optional.of(m);
             }
         }
