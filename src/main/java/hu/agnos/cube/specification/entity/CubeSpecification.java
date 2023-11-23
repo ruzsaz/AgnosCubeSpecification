@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
+import java.awt.TrayIcon;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -166,7 +167,7 @@ public class CubeSpecification {
     public List<String> getDistinctClassicalMeasureNameList() {
         List<String> result = new ArrayList<>();
         for (MeasureSpecification measure : getMeasures()) {
-            if (!result.contains(measure.getUniqueName()) && measure.isClassical() ) {
+            if (!result.contains(measure.getUniqueName()) && measure.isClassical()) {
                 result.add(measure.getUniqueName());
             }
         }
@@ -181,15 +182,24 @@ public class CubeSpecification {
         }
     }
 
-    public Optional<MeasureSpecification> getCountDistinctMeasure(){
-        for(MeasureSpecification m : this.measures){
-            if(m.getType()!= null && m.getType().equals("CountDistinct")){
+    public Optional<MeasureSpecification> getCountDistinctMeasure() {
+        for (MeasureSpecification m : this.measures) {
+            if (m.getType() != null && m.getType().equals(MeasureType.COUNT_DISTINCT.getType())) {
                 return Optional.of(m);
             }
         }
-       Optional<MeasureSpecification> empty = Optional.empty();
-       return empty;
+        Optional<MeasureSpecification> empty = Optional.empty();
+        return empty;
     }
 
+    @JsonIgnore
+    public String getType() {
+        for (MeasureSpecification m : this.measures) {
+            if (m.getType() != null && m.getType().equals(MeasureType.COUNT_DISTINCT.getType())) {
+                return MeasureType.COUNT_DISTINCT.getType();
+            }
+        }
+        return MeasureType.CLASSICAL.getType();
+    }
 
 }
