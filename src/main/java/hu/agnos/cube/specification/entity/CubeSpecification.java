@@ -182,6 +182,7 @@ public class CubeSpecification {
         }
     }
 
+    @JsonIgnore
     public Optional<MeasureSpecification> getCountDistinctMeasure() {
         for (MeasureSpecification m : this.measures) {
             if (m.getType() != null && m.getType().equals(MeasureType.COUNT_DISTINCT.getType())) {
