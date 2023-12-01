@@ -43,6 +43,7 @@
                         <xs:complexType>
                            <xs:attribute name="uniqueName" type="xs:string" use="required" />
                            <xs:attribute name="calculatedFormula" type="xs:string" use="optional" />
+                           <xs:attribute name="isHidden" type="xs:boolean" use="optional" />                            
                            <xs:attribute name="type" type="MeasureType" use="optional" />                            
                         </xs:complexType>
                      </xs:element>

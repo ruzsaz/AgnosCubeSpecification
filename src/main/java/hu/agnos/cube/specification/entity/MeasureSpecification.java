@@ -34,7 +34,12 @@ public class MeasureSpecification {
     @Getter
     @JacksonXmlProperty(isAttribute = true)
     private String calculatedFormula;
-    
+
+    @Getter
+    @Setter
+    @JacksonXmlProperty(isAttribute = true)  
+    private boolean hidden;   
+
     
     public void setCalculatedFormula(String calculatedFormula) {
         this.calculatedFormula = InfixToPostfixConverter.convert(calculatedFormula);
