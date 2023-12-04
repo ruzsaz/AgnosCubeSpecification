@@ -37,7 +37,7 @@ public class MeasureSpecification {
 
     @Getter
     @Setter
-    @JacksonXmlProperty(isAttribute = true)  
+    @JacksonXmlProperty(isAttribute = true, localName = "isHidden")
     private boolean hidden;   
 
     
